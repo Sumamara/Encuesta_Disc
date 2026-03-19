@@ -4,7 +4,7 @@ import { DiscWordGroup } from "./quizData";
 import { DiscAnswer } from "./QuizEngine";
 import { cn } from "@/lib/utils";
 import { ArrowLeft, Check, Plus, Minus } from "lucide-react";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { Button } from "@/components/ui/button";
 
 interface QuizQuestionProps {
@@ -48,7 +48,7 @@ const QuizQuestion = ({
         if (plus === category) setPlus(null);
     };
 
-    const handleContinue = () => {
+    const handleContinue = useCallback(() => {
         if (plus && minus && !isAnimating && !isExiting) {
             setIsAnimating(true);
             setIsExiting(true);
@@ -56,7 +56,7 @@ const QuizQuestion = ({
                 onAnswer({ plus, minus });
             }, 300); // Allow exit animation
         }
-    };
+    }, [plus, minus, isAnimating, isExiting, onAnswer]);
 
     // Auto-advance if both are selected
     useEffect(() => {
@@ -64,14 +64,14 @@ const QuizQuestion = ({
              const timer = setTimeout(handleContinue, 400); 
              return () => clearTimeout(timer);
         }
-    }, [plus, minus]);
+    }, [plus, minus, savedAnswer, handleContinue]);
 
     return (
         <div className={cn(
-            "w-full max-w-2xl space-y-8 text-center relative px-4",
+            "w-full max-w-2xl space-y-8 text-center relative px-4 transition-all duration-500 ease-in-out",
             isExiting 
-                ? "animate-out fade-out slide-out-to-left-12 duration-300 ease-in-out fill-mode-forwards" 
-                : "animate-in fade-in slide-in-from-right-12 duration-500 ease-out"
+                ? "animate-out fade-out slide-out-to-left-12 duration-300" 
+                : "animate-in fade-in slide-in-from-right-12 duration-500"
         )}>
             {/* Progress */}
             <div className="space-y-4">

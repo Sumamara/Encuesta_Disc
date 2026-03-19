@@ -34,7 +34,7 @@ const QuizWelcome = ({ onStart }: QuizWelcomeProps) => {
                     <ul className="list-disc list-inside text-left space-y-1">
                         <li>Sé honesto/a y no le des muchas vueltas a cada pregunta.</li>
                         <li>No hay respuestas correctas o incorrectas.</li>
-                        <li>Debes elegir un "MÁS" y un "MENOS" por grupo.</li>
+                        <li>Debes elegir un &quot;MÁS&quot; y un &quot;MENOS&quot; por grupo.</li>
                     </ul>
                 </div>
                 <p className="text-lg font-medium text-primary pt-4">
